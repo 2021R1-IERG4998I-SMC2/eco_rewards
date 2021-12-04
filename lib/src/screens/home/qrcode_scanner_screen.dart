@@ -9,23 +9,23 @@ class QRCodeScannerScreen extends StatelessWidget {
 
   QRCodeScannerScreen({Key? key}) : super(key: key);
 
+  final appBarTextStyle = const TextStyle(
+    color: Colors.white,
+    fontSize: 18.0,
+    fontWeight: FontWeight.normal,
+  );
+
   @override
   Widget build(BuildContext context) => Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
-          title: const Text(
-            'Claim EcoPoints',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 18.0,
-              fontWeight: FontWeight.normal,
-            ),
-          ),
+          title: const Text('Claim Your EcoPoints'),
           centerTitle: true,
+          titleTextStyle: appBarTextStyle,
+          toolbarTextStyle: appBarTextStyle,
           elevation: 0.0,
           backgroundColor: Colors.transparent,
-          leading: const FluroBackButton(color: Colors.white),
-          // backgroundColor: Colors.transparent,
+          leading: FluroBackButton(color: appBarTextStyle.color!),
         ),
         body: buildScanner(context),
       );
@@ -42,10 +42,10 @@ class QRCodeScannerScreen extends StatelessWidget {
         },
         overlay: QrScannerOverlayShape(
           borderColor: AppColors.primarySwatch.shade400,
-          borderRadius: 0,
-          borderLength: 20,
-          borderWidth: 6,
-          cutOutSize: 250,
+          borderRadius: 0.0,
+          borderLength: 20.0,
+          borderWidth: 6.0,
+          cutOutSize: 250.0,
         ),
       );
 }

@@ -1,9 +1,11 @@
 import 'package:fluro/fluro.dart';
 
 import 'services.dart';
-import 'screens/root/index.dart';
-import 'screens/root/claim_screen.dart';
-import 'screens/root/qrcode_scanner_screen.dart';
+import 'screens/home/index.dart';
+import 'screens/home/claim_screen.dart';
+import 'screens/home/qrcode_scanner_screen.dart';
+import 'screens/search/index.dart';
+import 'screens/search/results.dart';
 
 class Routes {
   static void setup() {
@@ -13,6 +15,12 @@ class Routes {
         handler: Handler(handlerFunc: (context, params) => const HomeScreen()),
       )
       ..define(
+        '/qrcode-scanner',
+        handler:
+            Handler(handlerFunc: (context, params) => QRCodeScannerScreen()),
+        transitionType: TransitionType.inFromRight,
+      )
+      ..define(
         '/claim/:transactionId',
         handler: Handler(
             handlerFunc: (context, params) =>
@@ -20,9 +28,16 @@ class Routes {
         transitionType: TransitionType.inFromRight,
       )
       ..define(
-        '/qrcode-scanner',
+        '/search',
         handler:
-            Handler(handlerFunc: (context, params) => QRCodeScannerScreen()),
+            Handler(handlerFunc: (context, params) => const SearchScreen()),
+        transitionType: TransitionType.inFromRight,
+      )
+      ..define(
+        '/search/:keywords',
+        handler: Handler(
+            handlerFunc: (context, params) =>
+                SearchResultsScreen(keywords: params["keywords"]![0])),
         transitionType: TransitionType.inFromRight,
       );
   }
