@@ -4,5 +4,7 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => const Scaffold();
+  Widget build(BuildContext context) => const Scaffold(
+        body: Text("The settings screen is still under development."),
+      );
 }

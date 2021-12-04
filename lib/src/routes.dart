@@ -4,8 +4,7 @@ import 'services.dart';
 import 'screens/home/index.dart';
 import 'screens/home/claim_screen.dart';
 import 'screens/home/qrcode_scanner_screen.dart';
-import 'screens/search/index.dart';
-import 'screens/search/results.dart';
+import 'screens/settings/index.dart';
 
 class Routes {
   static void setup() {
@@ -28,16 +27,9 @@ class Routes {
         transitionType: TransitionType.inFromRight,
       )
       ..define(
-        '/search',
+        '/settings',
         handler:
-            Handler(handlerFunc: (context, params) => const SearchScreen()),
-        transitionType: TransitionType.inFromRight,
-      )
-      ..define(
-        '/search/:keywords',
-        handler: Handler(
-            handlerFunc: (context, params) =>
-                SearchResultsScreen(keywords: params["keywords"]![0])),
+            Handler(handlerFunc: (context, params) => const SettingsScreen()),
         transitionType: TransitionType.inFromRight,
       );
   }

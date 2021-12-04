@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:eco_rewards/src/components/shared/back_button.dart';
+
 class ClaimScreen extends StatelessWidget {
   final String transactionId;
 
@@ -7,6 +9,11 @@ class ClaimScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Transaction Deails'),
+          leading: const FluroBackButton(),
+        ),
         body: Text(transactionId),
       );
 }
