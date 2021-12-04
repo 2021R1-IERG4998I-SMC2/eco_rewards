@@ -1,6 +1,9 @@
 import 'package:fluro/fluro.dart';
 
 import 'services.dart';
+
+import 'models/transaction_details.dart';
+
 import 'screens/home/index.dart';
 import 'screens/home/claim_screen.dart';
 import 'screens/home/qrcode_scanner_screen.dart';
@@ -20,10 +23,14 @@ class Routes {
         transitionType: TransitionType.inFromRight,
       )
       ..define(
-        '/claim/:transactionId',
-        handler: Handler(
-            handlerFunc: (context, params) =>
-                ClaimScreen(transactionId: params["transactionId"]![0])),
+        '/claim',
+        handler: Handler(handlerFunc: (context, params) {
+          {
+            final model =
+                context?.settings?.arguments as TransactionDetailsModel;
+            return ClaimScreen(model);
+          }
+        }),
         transitionType: TransitionType.inFromRight,
       )
       ..define(

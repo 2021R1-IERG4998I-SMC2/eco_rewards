@@ -24,42 +24,47 @@ class HomeScreenState extends State<HomeScreen> {
         bottomNavigationBar: buildBottomNavigationBar(),
       );
 
-  Widget buildBottomNavigationBar() => BottomNavigationBar(
-        currentIndex: _selectedTab,
-        type: BottomNavigationBarType.fixed,
-        elevation: 16.0,
-        selectedItemColor: AppColors.primarySwatch.shade400,
-        unselectedItemColor: Colors.black,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        selectedFontSize: 12.0,
-        unselectedFontSize: 12.0,
-        onTap: (index) => setState(() {
-          _selectedTab = index;
-        }),
-        items: [
-          BottomNavigationBarItem(
-            label: "Explore",
-            icon: Icon(
-                _selectedTab == 0 ? Ionicons.globe : Ionicons.globe_outline),
-          ),
-          BottomNavigationBarItem(
-            label: "Search",
-            icon: Icon(
-                _selectedTab == 1 ? Ionicons.search : Ionicons.search_outline),
-          ),
-          BottomNavigationBarItem(
-            label: "Friends",
-            icon: Icon(
-                _selectedTab == 2 ? Ionicons.people : Ionicons.people_outline),
-          ),
-          BottomNavigationBarItem(
-            label: "My Account",
-            icon: Icon(_selectedTab == 3
-                ? Ionicons.person_circle
-                : Ionicons.person_circle_outline),
-          ),
-        ],
+  Widget buildBottomNavigationBar() => SizedBox(
+        height: 65.0,
+        child: BottomNavigationBar(
+          currentIndex: _selectedTab,
+          type: BottomNavigationBarType.fixed,
+          elevation: 16.0,
+          selectedItemColor: AppColors.primarySwatch.shade400,
+          unselectedItemColor: Colors.black,
+          showSelectedLabels: true,
+          showUnselectedLabels: true,
+          selectedFontSize: 12.0,
+          unselectedFontSize: 12.0,
+          onTap: (index) => setState(() {
+            _selectedTab = index;
+          }),
+          items: [
+            BottomNavigationBarItem(
+              label: "Explore",
+              icon: Icon(
+                  _selectedTab == 0 ? Ionicons.globe : Ionicons.globe_outline),
+            ),
+            BottomNavigationBarItem(
+              label: "Search",
+              icon: Icon(_selectedTab == 1
+                  ? Ionicons.search
+                  : Ionicons.search_outline),
+            ),
+            BottomNavigationBarItem(
+              label: "Friends",
+              icon: Icon(_selectedTab == 2
+                  ? Ionicons.people
+                  : Ionicons.people_outline),
+            ),
+            BottomNavigationBarItem(
+              label: "My Account",
+              icon: Icon(_selectedTab == 3
+                  ? Ionicons.person_circle
+                  : Ionicons.person_circle_outline),
+            ),
+          ],
+        ),
       );
 }
 

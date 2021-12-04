@@ -1,13 +1,21 @@
-class TransactionDetailModel {
-  const TransactionDetailModel(
+class TransactionDetailsModel {
+  final int id;
+  final String merchantName;
+  final double transactionAmount;
+  final DateTime transactedOn;
+
+  const TransactionDetailsModel(
     this.id,
     this.merchantName,
     this.transactionAmount,
     this.transactedOn,
   );
 
-  final int id;
-  final String merchantName;
-  final double transactionAmount;
-  final DateTime transactedOn;
+  factory TransactionDetailsModel.fromResponse(Map response) =>
+      TransactionDetailsModel(
+        response["id"],
+        response["merchantName"],
+        response["transactionAmount"],
+        DateTime.parse(response["transactedOn"]),
+      );
 }

@@ -10,4 +10,12 @@ final appTheme = ThemeData(
     backgroundColor: AppColors.backgroundColor,
     errorColor: AppColors.errorColor,
   ),
+  appBarTheme: const AppBarTheme(
+    centerTitle: true,
+    titleTextStyle: TextStyle(
+      fontSize: 18.0,
+      fontWeight: FontWeight.normal,
+    ),
+    iconTheme: IconThemeData(size: 20.0),
+  ),
 );
