@@ -15,15 +15,20 @@ class HomeSliverAppBar extends StatelessWidget {
   Widget build(BuildContext context) => SliverAppBar(
         floating: true,
         stretch: true,
+        elevation: 10.0,
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(30.0),
           child: Container(
             alignment: Alignment.bottomLeft,
             margin: const EdgeInsets.only(left: contentMargin, bottom: 15.0),
-            child: buildBalanceDisplay(context),
+            child: _buildBalanceDisplay(context),
           ),
         ),
         flexibleSpace: FlexibleSpaceBar(
+          stretchModes: const [
+            StretchMode.zoomBackground,
+            StretchMode.blurBackground,
+          ],
           background: Image.asset(
             'assets/images/home/appbar_background.png',
             fit: BoxFit.cover,
@@ -33,18 +38,18 @@ class HomeSliverAppBar extends StatelessWidget {
         actions: [
           Container(
             margin: const EdgeInsets.only(right: contentMargin),
-            child: buildScanButton(context),
+            child: _buildScanButton(context),
           )
         ],
       );
 
-  Widget buildScanButton(BuildContext context) => ActionButton(
+  Widget _buildScanButton(BuildContext context) => ActionButton(
         icon: Ionicons.barcode_outline,
         onPressed: () async =>
             await Navigator.pushNamed(context, '/qrcode-scanner'),
       );
 
-  Widget buildBalanceDisplay(BuildContext context) =>
+  Widget _buildBalanceDisplay(BuildContext context) =>
       Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         const Text(
           "EcoPoints Balance",
@@ -66,7 +71,7 @@ class HomeSliverAppBar extends StatelessWidget {
           builder: (context, int? _balance, _) => RichText(
             text: TextSpan(children: [
               TextSpan(
-                text: (_balance ?? 0).toString(),
+                text: _balance != null ? _balance.toString() : "-",
                 style: const TextStyle(
                   fontSize: 30.0,
                   fontWeight: FontWeight.bold,

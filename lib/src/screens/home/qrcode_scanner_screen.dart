@@ -9,7 +9,7 @@ import 'package:eco_rewards/src/constants/colors.dart';
 import 'package:eco_rewards/src/components/shared/back_button.dart';
 
 class QRCodeScannerScreen extends StatelessWidget {
-  static const fetchBalanceApi =
+  static const _getTransacionDetailsApi =
       "https://run.mocky.io/v3/fbec42c7-a54f-4a3d-b331-a4150c1dadeb";
 
   final qrKey = GlobalKey(debugLabel: 'QRView');
@@ -30,10 +30,10 @@ class QRCodeScannerScreen extends StatelessWidget {
           backgroundColor: Colors.transparent,
           leading: const FluroBackButton(color: Colors.white),
         ),
-        body: buildScanner(context),
+        body: _buildScanner(context),
       );
 
-  Widget buildScanner(BuildContext context) => QRView(
+  Widget _buildScanner(BuildContext context) => QRView(
         key: qrKey,
         onQRViewCreated: (controller) async {
           controller.scannedDataStream.listen((barcode) async {
@@ -44,7 +44,7 @@ class QRCodeScannerScreen extends StatelessWidget {
 
             controller.pauseCamera();
 
-            final model = getTransactionDetails(transactionId);
+            final model = _getTransactionDetails(transactionId);
 
             await Navigator.popAndPushNamed(
               context,
@@ -62,10 +62,10 @@ class QRCodeScannerScreen extends StatelessWidget {
         ),
       );
 
-  Future<TransactionDetailsModel?> getTransactionDetails(
+  Future<TransactionDetailsModel?> _getTransactionDetails(
       int transactionId) async {
     return await client
-        .getUrl(Uri.parse(fetchBalanceApi))
+        .getUrl(Uri.parse(_getTransacionDetailsApi))
         .then((request) async {
       return request.close();
     }).then((response) async {

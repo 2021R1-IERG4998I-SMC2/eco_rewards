@@ -38,8 +38,8 @@ dependencies:
   fluro: ^2.0.3
   ionicons: ^0.1.2
   get_it: ^7.2.0
-  rxdart: ^0.27.3
   qr_code_scanner: ^0.6.1
+  rxdart: ^0.27.3
 
 dev_dependencies:
   flutter_test:

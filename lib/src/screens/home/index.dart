@@ -21,10 +21,10 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) => Scaffold(
         body: tabs[_selectedTab],
-        bottomNavigationBar: buildBottomNavigationBar(),
+        bottomNavigationBar: _buildBottomNavigationBar(),
       );
 
-  Widget buildBottomNavigationBar() => SizedBox(
+  Widget _buildBottomNavigationBar() => SizedBox(
         height: 65.0,
         child: BottomNavigationBar(
           currentIndex: _selectedTab,
