@@ -16,7 +16,7 @@ class Routes {
         '/claim/:transactionId',
         handler: Handler(
             handlerFunc: (context, params) =>
-                ClaimScreen(transactionId: params['transactionId']![0])),
+                ClaimScreen(transactionId: params["transactionId"]![0])),
         transitionType: TransitionType.inFromRight,
       )
       ..define(

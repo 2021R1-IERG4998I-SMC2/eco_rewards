@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:fluro/fluro.dart';
 
 import 'package:eco_rewards/src/constants/colors.dart';
-import 'package:eco_rewards/src/services.dart';
+import 'package:eco_rewards/src/components/shared/back_button.dart';
 
 class QRCodeScannerScreen extends StatelessWidget {
   final qrKey = GlobalKey(debugLabel: 'QRView');
@@ -12,21 +11,41 @@ class QRCodeScannerScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Scaffold(
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          title: const Text(
+            'Claim EcoPoints',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+              fontWeight: FontWeight.normal,
+            ),
+          ),
+          centerTitle: true,
+          elevation: 0.0,
+          backgroundColor: Colors.transparent,
+          leading: const FluroBackButton(color: Colors.white),
+          // backgroundColor: Colors.transparent,
+        ),
         body: buildScanner(context),
       );
 
   Widget buildScanner(BuildContext context) => QRView(
         key: qrKey,
-        onQRViewCreated: (controller) => controller.scannedDataStream.listen(
-            (barcode) => services
-                .get<FluroRouter>()
-                .navigateTo(context, '/claim/${barcode.code}')),
+        onQRViewCreated: (controller) async {
+          controller.scannedDataStream.listen((barcode) async {
+            controller.pauseCamera();
+
+            final transactionId = Uri.encodeComponent(barcode.code ?? "null");
+            await Navigator.popAndPushNamed(context, '/claim/$transactionId');
+          });
+        },
         overlay: QrScannerOverlayShape(
           borderColor: AppColors.primarySwatch.shade400,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: 150,
+          borderRadius: 0,
+          borderLength: 20,
+          borderWidth: 6,
+          cutOutSize: 250,
         ),
       );
 }

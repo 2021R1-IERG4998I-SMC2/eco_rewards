@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluro/fluro.dart';
 import 'package:ionicons/ionicons.dart';
-
-import 'package:eco_rewards/src/services.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -22,7 +19,7 @@ class HomeScreen extends StatelessWidget {
 
   Widget buildScanButton(BuildContext context) => IconButton(
         icon: const Icon(Ionicons.qr_code),
-        onPressed: () =>
-            services.get<FluroRouter>().navigateTo(context, '/qrcode-scanner'),
+        onPressed: () async =>
+            await Navigator.pushNamed(context, '/qrcode-scanner'),
       );
 }
