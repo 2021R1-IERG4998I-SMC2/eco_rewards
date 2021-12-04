@@ -8,6 +8,7 @@ class ClaimScreen extends StatelessWidget {
 
   const ClaimScreen(this.model, {Key? key}) : super(key: key);
 
+  // TODO: Implement claim screen
   @override
   Widget build(BuildContext context) => Scaffold(
         appBar: AppBar(

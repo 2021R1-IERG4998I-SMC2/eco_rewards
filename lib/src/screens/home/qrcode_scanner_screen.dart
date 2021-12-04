@@ -43,6 +43,7 @@ class QRCodeScannerScreen extends StatelessWidget {
             if (transactionId == null) return;
 
             controller.pauseCamera();
+            // TODO: Add loading animation
 
             final model = _getTransactionDetails(transactionId);
 
@@ -64,6 +65,7 @@ class QRCodeScannerScreen extends StatelessWidget {
 
   Future<TransactionDetailsModel?> _getTransactionDetails(
       int transactionId) async {
+    // TODO: Change it to real API
     return await client
         .getUrl(Uri.parse(_getTransacionDetailsApi))
         .then((request) async {

@@ -32,6 +32,7 @@ class ExploreTab extends StatelessWidget {
       });
 
   Future<int> _getBalance() async {
+    // TODO: Change it to real API
     return await client
         .getUrl(Uri.parse(_getBalanceApi))
         .then((request) async => await request.close())
