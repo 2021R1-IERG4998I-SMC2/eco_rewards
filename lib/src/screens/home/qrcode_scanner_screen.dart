@@ -1,16 +1,20 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:eco_rewards/src/models/transaction_details.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:ionicons/ionicons.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'package:eco_rewards/src/constants/colors.dart';
 import 'package:eco_rewards/src/components/shared/back_button.dart';
+import 'package:eco_rewards/src/models/claim_screen_model.dart';
 
 class QRCodeScannerScreen extends StatelessWidget {
-  static const _getTransacionDetailsApi =
-      "https://run.mocky.io/v3/fbec42c7-a54f-4a3d-b331-a4150c1dadeb";
+  static const _getClaimDetailsApi =
+      'https://run.mocky.io/v3/07a4c1f2-9185-4362-a676-e2d664908136';
+  // 'https://example.com/transaction/$id' (QRCODE)
 
   final qrKey = GlobalKey(debugLabel: 'QRView');
 
@@ -35,25 +39,8 @@ class QRCodeScannerScreen extends StatelessWidget {
 
   Widget _buildScanner(BuildContext context) => QRView(
         key: qrKey,
-        onQRViewCreated: (controller) async {
-          controller.scannedDataStream.listen((barcode) async {
-            if (barcode.code == null) return;
-
-            final transactionId = int.tryParse(barcode.code!);
-            if (transactionId == null) return;
-
-            controller.pauseCamera();
-            // TODO: Add loading animation
-
-            final model = _getTransactionDetails(transactionId);
-
-            await Navigator.popAndPushNamed(
-              context,
-              '/claim',
-              arguments: await model,
-            );
-          });
-        },
+        onQRViewCreated: (controller) async =>
+            _setupScanner(context, controller),
         overlay: QrScannerOverlayShape(
           borderColor: AppColors.primarySwatch.shade400,
           borderRadius: 0.0,
@@ -63,11 +50,51 @@ class QRCodeScannerScreen extends StatelessWidget {
         ),
       );
 
-  Future<TransactionDetailsModel?> _getTransactionDetails(
-      int transactionId) async {
+  SnackBar _buildSnackbar(BuildContext context) => SnackBar(
+        duration: const Duration(milliseconds: 800),
+        content: Row(children: const [
+          Icon(
+            Ionicons.checkmark_outline,
+            color: Colors.white,
+          ),
+          SizedBox(width: 20.0),
+          Text(
+            'Scanned successfully. Retrieving information...',
+            style: TextStyle(color: Colors.white),
+          ),
+        ]),
+      );
+
+  Future<void> _setupScanner(
+      BuildContext context, QRViewController controller) async {
+    controller.scannedDataStream.listen((barcode) async {
+      if (barcode.code == null) return;
+
+      final transactionId = int.tryParse(barcode.code!);
+      if (transactionId == null) return;
+
+      if (barcode.code == null) return;
+
+      final id = int.tryParse(barcode.code!);
+      if (id == null) return;
+
+      final model = _getClaimDetails(transactionId);
+
+      controller.pauseCamera();
+      ScaffoldMessenger.of(context).showSnackBar(_buildSnackbar(context));
+
+      await Navigator.pushNamed(
+        context,
+        '/claim',
+        arguments: await model,
+      );
+    });
+  }
+
+  Future<ClaimScreenModel?> _getClaimDetails(int transactionId) async {
     // TODO: Change it to real API
     return await client
-        .getUrl(Uri.parse(_getTransacionDetailsApi))
+        .getUrl(Uri.parse(_getClaimDetailsApi))
         .then((request) async {
       return request.close();
     }).then((response) async {
@@ -75,7 +102,7 @@ class QRCodeScannerScreen extends StatelessWidget {
         final responseBody =
             await response.transform(const Utf8Decoder()).join();
 
-        return TransactionDetailsModel.fromResponse(json.decode(responseBody));
+        return ClaimScreenModel.fromResponse(json.decode(responseBody));
       }
     });
   }

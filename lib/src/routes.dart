@@ -2,7 +2,7 @@ import 'package:fluro/fluro.dart';
 
 import 'services.dart';
 
-import 'models/transaction_details.dart';
+import 'models/claim_screen_model.dart';
 
 import 'screens/home/index.dart';
 import 'screens/home/claim_screen.dart';
@@ -26,12 +26,11 @@ class Routes {
         '/claim',
         handler: Handler(handlerFunc: (context, params) {
           {
-            final model =
-                context?.settings?.arguments as TransactionDetailsModel;
+            final model = context?.settings?.arguments as ClaimScreenModel;
             return ClaimScreen(model);
           }
         }),
-        transitionType: TransitionType.inFromRight,
+        transitionType: TransitionType.inFromBottom,
       )
       ..define(
         '/settings',

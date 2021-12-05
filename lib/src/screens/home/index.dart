@@ -13,22 +13,25 @@ class HomeScreen extends StatelessWidget {
 
   HomeScreen({Key? key}) : super(key: key);
 
-  // Use IndexedStack instead of PageView to preserve the states of children
   @override
   Widget build(BuildContext context) => Scaffold(
-        body: ValueListenableBuilder(
-          valueListenable: _page,
-          builder: (context, int page, _) => IndexedStack(
-            index: page,
-            children: [
-              ExplorePage(),
-              const SearchPage(),
-              const FriendsPage(),
-              const AccountPage(),
-            ],
-          ),
-        ),
+        body: _buildPages(),
         bottomNavigationBar: _buildBottomNavigationBar(),
+      );
+
+  // Use IndexedStack instead of PageView
+  // to preserve the states of its children
+  Widget _buildPages() => ValueListenableBuilder(
+        valueListenable: _page,
+        builder: (context, int page, _) => IndexedStack(
+          index: page,
+          children: [
+            ExplorePage(),
+            const SearchPage(),
+            const FriendsPage(),
+            const AccountPage(),
+          ],
+        ),
       );
 
   Widget _buildBottomNavigationBar() => SizedBox(
@@ -48,24 +51,24 @@ class HomeScreen extends StatelessWidget {
             onTap: (index) => _page.value = index,
             items: [
               BottomNavigationBarItem(
-                label: "Explore",
+                label: 'Explore',
                 icon: Icon(
                     _page.value == 0 ? Ionicons.globe : Ionicons.globe_outline),
               ),
               BottomNavigationBarItem(
-                label: "Search",
+                label: 'Search',
                 icon: Icon(_page.value == 1
                     ? Ionicons.search
                     : Ionicons.search_outline),
               ),
               BottomNavigationBarItem(
-                label: "Friends",
+                label: 'Friends',
                 icon: Icon(_page.value == 2
                     ? Ionicons.people
                     : Ionicons.people_outline),
               ),
               BottomNavigationBarItem(
-                label: "My Account",
+                label: 'My Account',
                 icon: Icon(_page.value == 3
                     ? Ionicons.person_circle
                     : Ionicons.person_circle_outline),

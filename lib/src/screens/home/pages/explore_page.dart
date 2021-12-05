@@ -8,6 +8,7 @@ import 'package:eco_rewards/src/components/home/app_bar.dart';
 class ExplorePage extends StatelessWidget {
   static const _getBalanceApi =
       "https://run.mocky.io/v3/2fccfd8b-9596-4f72-bdfb-d9913dee7a0b";
+  //'https://example.com/user/${id}/balance';
 
   final client = HttpClient();
   final _balance = ValueNotifier<int?>(null);
@@ -35,6 +36,7 @@ class ExplorePage extends StatelessWidget {
     // TODO: Change it to real API
     return await client
         .getUrl(Uri.parse(_getBalanceApi))
+        // inline function
         .then((request) async => await request.close())
         .then((response) async {
       final responseBody = await response.transform(const Utf8Decoder()).join();

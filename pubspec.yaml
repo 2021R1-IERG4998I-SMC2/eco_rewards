@@ -40,6 +40,9 @@ dependencies:
   get_it: ^7.2.0
   qr_code_scanner: ^0.6.1
   rxdart: ^0.27.3
+  google_fonts: ^2.1.0
+  intl: ^0.17.0
+  flutter_spinkit: ^5.1.0
 
 dev_dependencies:
   flutter_test:

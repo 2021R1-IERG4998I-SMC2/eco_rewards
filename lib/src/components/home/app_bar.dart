@@ -49,54 +49,56 @@ class HomeSliverAppBar extends StatelessWidget {
             await Navigator.pushNamed(context, '/qrcode-scanner'),
       );
 
-  Widget _buildBalanceDisplay(BuildContext context) =>
-      Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        const Text(
-          "EcoPoints Balance",
-          style: TextStyle(
-            fontSize: 14.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white,
-            shadows: [
-              Shadow(
-                color: Color(0xffeeeeee),
-                offset: Offset(0.0, 0.0),
-                blurRadius: 0.3,
-              )
-            ],
+  Widget _buildBalanceDisplay(BuildContext context) => Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "EcoPoints Balance",
+            style: TextStyle(
+              fontSize: 14.0,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              shadows: [
+                Shadow(
+                  color: Color(0xffeeeeee),
+                  offset: Offset(0.0, 0.0),
+                  blurRadius: 0.3,
+                )
+              ],
+            ),
           ),
-        ),
-        ValueListenableBuilder(
-          valueListenable: balance,
-          builder: (context, int? _balance, _) => RichText(
-            text: TextSpan(children: [
-              TextSpan(
-                text: _balance != null ? _balance.toString() : "-",
-                style: const TextStyle(
-                  fontSize: 30.0,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                  shadows: [
-                    Shadow(
-                      color: Color(0xffeeeeee),
-                      offset: Offset(0.0, 0.0),
-                      blurRadius: 0.3,
-                    )
-                  ],
-                ),
-              ),
-              WidgetSpan(
-                child: Container(
-                  margin: const EdgeInsets.only(left: 8.0),
-                  child: Icon(
-                    Ionicons.leaf,
-                    size: 20.0,
-                    color: AppColors.primarySwatch.shade400,
+          ValueListenableBuilder(
+            valueListenable: balance,
+            builder: (context, int? _balance, _) => RichText(
+              text: TextSpan(children: [
+                TextSpan(
+                  text: _balance != null ? _balance.toString() : "-",
+                  style: const TextStyle(
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    shadows: [
+                      Shadow(
+                        color: Color(0xffeeeeee),
+                        offset: Offset(0.0, 0.0),
+                        blurRadius: 0.3,
+                      )
+                    ],
                   ),
                 ),
-              ),
-            ]),
+                WidgetSpan(
+                  child: Container(
+                    margin: const EdgeInsets.only(left: 8.0),
+                    child: Icon(
+                      Ionicons.leaf,
+                      size: 20.0,
+                      color: AppColors.primarySwatch.shade400,
+                    ),
+                  ),
+                ),
+              ]),
+            ),
           ),
-        ),
-      ]);
+        ],
+      );
 }
