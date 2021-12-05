@@ -8,7 +8,8 @@ import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import 'package:eco_rewards/src/constants/colors.dart';
 import 'package:eco_rewards/src/components/shared/back_button.dart';
-import 'package:eco_rewards/src/models/claim_screen_model.dart';
+
+import 'package:eco_rewards/src/models/home/claim_screen_model.dart';
 
 class QRCodeScannerScreen extends StatelessWidget {
   // TODO: Change it to real API

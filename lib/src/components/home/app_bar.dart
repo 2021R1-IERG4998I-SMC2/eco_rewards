@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'package:eco_rewards/src/constants/colors.dart';
-import 'package:eco_rewards/src/models/user_wallet_model.dart';
+import 'package:eco_rewards/src/models/shared/user_wallet_model.dart';
 import 'package:eco_rewards/src/services.dart';
 
 import '../shared/action_button.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:eco_rewards/src/components/home/app_bar.dart';
-import 'package:eco_rewards/src/models/user_wallet_model.dart';
+import 'package:eco_rewards/src/models/shared/user_wallet_model.dart';
 import 'package:eco_rewards/src/services.dart';
 
 class ExplorePage extends StatelessWidget {

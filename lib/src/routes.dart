@@ -2,7 +2,7 @@ import 'package:fluro/fluro.dart';
 
 import 'services.dart';
 
-import 'models/claim_screen_model.dart';
+import 'models/home/claim_screen_model.dart';
 
 import 'screens/home/index.dart';
 import 'screens/home/claim_screen.dart';

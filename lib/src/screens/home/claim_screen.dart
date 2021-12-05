@@ -5,10 +5,13 @@ import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:eco_rewards/src/constants/colors.dart';
+
 import 'package:eco_rewards/src/components/shared/back_button.dart';
 import 'package:eco_rewards/src/components/home/claim_particular_item.dart';
-import 'package:eco_rewards/src/models/claim_screen_model.dart';
-import 'package:eco_rewards/src/models/user_wallet_model.dart';
+
+import 'package:eco_rewards/src/models/home/claim_screen_model.dart';
+import 'package:eco_rewards/src/models/shared/user_wallet_model.dart';
+
 import 'package:eco_rewards/src/services.dart';
 
 class ClaimScreen extends StatelessWidget {
