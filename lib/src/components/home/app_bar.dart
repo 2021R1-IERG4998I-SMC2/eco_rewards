@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
 
 import 'package:eco_rewards/src/constants/colors.dart';
+import 'package:eco_rewards/src/models/user_wallet_model.dart';
+import 'package:eco_rewards/src/services.dart';
 
 import '../shared/action_button.dart';
 
 class HomeSliverAppBar extends StatelessWidget {
   static const contentMargin = 20.0;
-  final ValueNotifier<int?> balance;
 
-  const HomeSliverAppBar(this.balance, {Key? key}) : super(key: key);
+  const HomeSliverAppBar({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => SliverAppBar(
@@ -67,12 +68,12 @@ class HomeSliverAppBar extends StatelessWidget {
               ],
             ),
           ),
-          ValueListenableBuilder(
-            valueListenable: balance,
-            builder: (context, int? _balance, _) => RichText(
+          StreamBuilder(
+            stream: services.get<UserWalletModel>().balanceStream,
+            builder: (context, AsyncSnapshot<int?> snapshot) => RichText(
               text: TextSpan(children: [
                 TextSpan(
-                  text: _balance != null ? _balance.toString() : "-",
+                  text: snapshot.data != null ? snapshot.data.toString() : "-",
                   style: const TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,

@@ -1,9 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:http/http.dart' as http;
 import 'package:ionicons/ionicons.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
@@ -12,13 +11,12 @@ import 'package:eco_rewards/src/components/shared/back_button.dart';
 import 'package:eco_rewards/src/models/claim_screen_model.dart';
 
 class QRCodeScannerScreen extends StatelessWidget {
+  // TODO: Change it to real API
   static const _getClaimDetailsApi =
       'https://run.mocky.io/v3/07a4c1f2-9185-4362-a676-e2d664908136';
   // 'https://example.com/transaction/$id' (QRCODE)
 
   final qrKey = GlobalKey(debugLabel: 'QRView');
-
-  final client = HttpClient();
 
   QRCodeScannerScreen({Key? key}) : super(key: key);
 
@@ -83,7 +81,7 @@ class QRCodeScannerScreen extends StatelessWidget {
       controller.pauseCamera();
       ScaffoldMessenger.of(context).showSnackBar(_buildSnackbar(context));
 
-      await Navigator.pushNamed(
+      await Navigator.popAndPushNamed(
         context,
         '/claim',
         arguments: await model,
@@ -92,18 +90,9 @@ class QRCodeScannerScreen extends StatelessWidget {
   }
 
   Future<ClaimScreenModel?> _getClaimDetails(int transactionId) async {
-    // TODO: Change it to real API
-    return await client
-        .getUrl(Uri.parse(_getClaimDetailsApi))
-        .then((request) async {
-      return request.close();
-    }).then((response) async {
-      if (response.statusCode == 200) {
-        final responseBody =
-            await response.transform(const Utf8Decoder()).join();
+    final response = await http.get(Uri.parse(_getClaimDetailsApi));
+    final data = json.decode(response.body);
 
-        return ClaimScreenModel.fromResponse(json.decode(responseBody));
-      }
-    });
+    return ClaimScreenModel.fromResponse(data);
   }
 }

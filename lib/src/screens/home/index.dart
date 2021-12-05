@@ -25,11 +25,11 @@ class HomeScreen extends StatelessWidget {
         valueListenable: _page,
         builder: (context, int page, _) => IndexedStack(
           index: page,
-          children: [
+          children: const [
             ExplorePage(),
-            const SearchPage(),
-            const FriendsPage(),
-            const AccountPage(),
+            SearchPage(),
+            FriendsPage(),
+            AccountPage(),
           ],
         ),
       );
