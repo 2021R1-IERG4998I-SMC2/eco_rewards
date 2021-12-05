@@ -4,10 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:rxdart/subjects.dart';
 
 class UserWalletModel {
-  // TODO: Change it to real API
   static const _getBalanceApi =
-      "https://run.mocky.io/v3/2fccfd8b-9596-4f72-bdfb-d9913dee7a0b";
-  //'https://example.com/user/${id}/balance';
+      'https://src-johnyuen97-gmailcom.vercel.app/getBalance';
 
   var userId = 0;
   final _balance = BehaviorSubject<int?>.seeded(null);
