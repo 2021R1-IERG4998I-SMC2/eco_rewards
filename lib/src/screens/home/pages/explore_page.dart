@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 import 'package:eco_rewards/src/components/home/app_bar.dart';
 
-class ExploreTab extends StatelessWidget {
+class ExplorePage extends StatelessWidget {
   static const _getBalanceApi =
       "https://run.mocky.io/v3/2fccfd8b-9596-4f72-bdfb-d9913dee7a0b";
 
   final client = HttpClient();
   final _balance = ValueNotifier<int?>(null);
 
-  ExploreTab({Key? key}) : super(key: key);
+  ExplorePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => FutureBuilder(
@@ -38,7 +38,6 @@ class ExploreTab extends StatelessWidget {
         .then((request) async => await request.close())
         .then((response) async {
       final responseBody = await response.transform(const Utf8Decoder()).join();
-
       final data = json.decode(responseBody);
 
       return data["balance"];

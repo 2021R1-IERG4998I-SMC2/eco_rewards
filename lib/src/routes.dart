@@ -14,7 +14,7 @@ class Routes {
     services.get<FluroRouter>()
       ..define(
         '/',
-        handler: Handler(handlerFunc: (context, params) => const HomeScreen()),
+        handler: Handler(handlerFunc: (context, params) => HomeScreen()),
       )
       ..define(
         '/qrcode-scanner',
