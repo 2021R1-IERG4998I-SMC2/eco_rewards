@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -18,7 +17,7 @@ class QRCodeScannerScreen extends StatefulWidget {
       'https://run.mocky.io/v3/07a4c1f2-9185-4362-a676-e2d664908136';
   // 'https://example.com/transaction/$id' (QRCODE)
 
-  QRCodeScannerScreen({Key? key}) : super(key: key);
+  const QRCodeScannerScreen({Key? key}) : super(key: key);
 
   @override
   State<QRCodeScannerScreen> createState() => _QRCodeScannerScreenState();
