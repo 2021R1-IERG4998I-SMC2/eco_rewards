@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -11,15 +12,22 @@ import 'package:eco_rewards/src/components/shared/back_button.dart';
 
 import 'package:eco_rewards/src/models/home/claim_screen_model.dart';
 
-class QRCodeScannerScreen extends StatelessWidget {
+class QRCodeScannerScreen extends StatefulWidget {
   // TODO: Change it to real API
   static const _getClaimDetailsApi =
       'https://run.mocky.io/v3/07a4c1f2-9185-4362-a676-e2d664908136';
   // 'https://example.com/transaction/$id' (QRCODE)
 
+  QRCodeScannerScreen({Key? key}) : super(key: key);
+
+  @override
+  State<QRCodeScannerScreen> createState() => _QRCodeScannerScreenState();
+}
+
+class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   final qrKey = GlobalKey(debugLabel: 'QRView');
 
-  QRCodeScannerScreen({Key? key}) : super(key: key);
+  bool _isSnackBarActive = false;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -49,25 +57,32 @@ class QRCodeScannerScreen extends StatelessWidget {
         ),
       );
 
-  void _showSnackBar(BuildContext context, IconData icon, String message) =>
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          duration: const Duration(milliseconds: 800),
-          content: Row(children: [
-            Icon(icon, color: Colors.white),
-            const SizedBox(width: 20.0),
-            Text(message, style: const TextStyle(color: Colors.white)),
-          ]),
-        ),
-      );
+  void _showSnackBar(BuildContext context, IconData icon, String message) {
+    if (_isSnackBarActive) return;
+
+    _isSnackBarActive = true;
+    ScaffoldMessenger.of(context)
+        .showSnackBar(
+          SnackBar(
+            duration: const Duration(milliseconds: 800),
+            content: Row(children: [
+              Icon(icon, color: Colors.white),
+              const SizedBox(width: 20.0),
+              Text(message, style: const TextStyle(color: Colors.white)),
+            ]),
+          ),
+        )
+        .closed
+        .then((reason) => _isSnackBarActive = false);
+  }
 
   Future<void> _setupScanner(
       BuildContext context, QRViewController controller) async {
     controller.scannedDataStream.listen((barcode) async {
-      final int? receiptId;
+      if (barcode.code == null) return;
 
-      if (barcode.code == null ||
-          (receiptId = int.tryParse(barcode.code!)) == null) {
+      final int? receiptId = int.tryParse(barcode.code!);
+      if (receiptId == null) {
         _showSnackBar(
           context,
           Ionicons.alert_outline,
@@ -76,7 +91,7 @@ class QRCodeScannerScreen extends StatelessWidget {
         return;
       }
 
-      final model = _getClaimDetails(receiptId!);
+      final model = _getClaimDetails(receiptId);
 
       controller.pauseCamera();
       _showSnackBar(
@@ -94,7 +109,8 @@ class QRCodeScannerScreen extends StatelessWidget {
   }
 
   Future<ClaimScreenModel?> _getClaimDetails(int transactionId) async {
-    final response = await http.get(Uri.parse(_getClaimDetailsApi));
+    final response =
+        await http.get(Uri.parse(QRCodeScannerScreen._getClaimDetailsApi));
     final data = json.decode(response.body);
 
     return ClaimScreenModel.fromResponse(data);
