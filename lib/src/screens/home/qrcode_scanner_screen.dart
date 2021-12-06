@@ -49,38 +49,41 @@ class QRCodeScannerScreen extends StatelessWidget {
         ),
       );
 
-  SnackBar _buildSnackbar(BuildContext context) => SnackBar(
-        duration: const Duration(milliseconds: 800),
-        content: Row(children: const [
-          Icon(
-            Ionicons.checkmark_outline,
-            color: Colors.white,
-          ),
-          SizedBox(width: 20.0),
-          Text(
-            'Scanned successfully. Retrieving information...',
-            style: TextStyle(color: Colors.white),
-          ),
-        ]),
+  void _showSnackBar(BuildContext context, IconData icon, String message) =>
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          duration: const Duration(milliseconds: 800),
+          content: Row(children: [
+            Icon(icon, color: Colors.white),
+            const SizedBox(width: 20.0),
+            Text(message, style: const TextStyle(color: Colors.white)),
+          ]),
+        ),
       );
 
   Future<void> _setupScanner(
       BuildContext context, QRViewController controller) async {
     controller.scannedDataStream.listen((barcode) async {
-      if (barcode.code == null) return;
+      final int? receiptId;
 
-      final transactionId = int.tryParse(barcode.code!);
-      if (transactionId == null) return;
+      if (barcode.code == null ||
+          (receiptId = int.tryParse(barcode.code!)) == null) {
+        _showSnackBar(
+          context,
+          Ionicons.alert_outline,
+          'The QR Code is not valid, please check.',
+        );
+        return;
+      }
 
-      if (barcode.code == null) return;
-
-      final id = int.tryParse(barcode.code!);
-      if (id == null) return;
-
-      final model = _getClaimDetails(transactionId);
+      final model = _getClaimDetails(receiptId!);
 
       controller.pauseCamera();
-      ScaffoldMessenger.of(context).showSnackBar(_buildSnackbar(context));
+      _showSnackBar(
+        context,
+        Ionicons.checkmark_outline,
+        'Scanned successfully. Retrieving information...',
+      );
 
       await Navigator.popAndPushNamed(
         context,
