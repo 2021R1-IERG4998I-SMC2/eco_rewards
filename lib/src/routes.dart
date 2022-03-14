@@ -18,8 +18,8 @@ class Routes {
       )
       ..define(
         '/qrcode-scanner',
-        handler:
-            Handler(handlerFunc: (context, params) => QRCodeScannerScreen()),
+        handler: Handler(
+            handlerFunc: (context, params) => const QRCodeScannerScreen()),
         transitionType: TransitionType.inFromRight,
       )
       ..define(
