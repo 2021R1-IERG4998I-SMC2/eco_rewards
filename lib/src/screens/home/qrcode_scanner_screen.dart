@@ -14,7 +14,8 @@ import 'package:eco_rewards/src/models/home/claim_screen_model.dart';
 class QRCodeScannerScreen extends StatefulWidget {
   // TODO: Change it to real API
   static const _getClaimDetailsApi =
-      'https://run.mocky.io/v3/07a4c1f2-9185-4362-a676-e2d664908136';
+  'http://3.235.209.53:3000/getClaimDetails?transId=1000';
+  //    'https://run.mocky.io/v3/07a4c1f2-9185-4362-a676-e2d664908136';
   // 'https://example.com/transaction/$id' (QRCODE)
 
   const QRCodeScannerScreen({Key? key}) : super(key: key);

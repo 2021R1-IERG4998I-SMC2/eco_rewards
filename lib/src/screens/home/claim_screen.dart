@@ -13,11 +13,14 @@ import 'package:eco_rewards/src/models/home/claim_screen_model.dart';
 import 'package:eco_rewards/src/models/shared/user_wallet_model.dart';
 
 import 'package:eco_rewards/src/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ClaimScreen extends StatelessWidget {
   // TODO: Change it to real API
-  static const _claimEcoPointsApi =
-      'https://run.mocky.io/v3/d7bdab3a-5387-432d-8080-869a972ca91a';
+
+  var _claimEcoPointsApi;
+  //'= 3.235.209.53:3000/getrewards?wallet=0x61824bF5Fcb2564897500A0dA0E752e3A7cAc492&tokens=669&transId=1000'
+      //'https://run.mocky.io/v3/d7bdab3a-5387-432d-8080-869a972ca91a';
   // 'https://example.com/claim';
 
   static const contentMargin = 20.0;
@@ -26,8 +29,10 @@ class ClaimScreen extends StatelessWidget {
   static final dateFormat = DateFormat('yyyy-MM-dd kk:mm:ss');
 
   final ClaimScreenModel model;
+  var prefs;
+  var wallet;
 
-  const ClaimScreen(this.model, {Key? key}) : super(key: key);
+  ClaimScreen(this.model, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -101,7 +106,7 @@ class ClaimScreen extends StatelessWidget {
               child: ListView(children: [
                 ClaimParticularItem(
                   'From',
-                  model.merchantName,
+                  model.merchantId,
                 ),
                 const ClaimParticularItem(
                   'To',
@@ -148,7 +153,20 @@ class ClaimScreen extends StatelessWidget {
         ),
       );
 
+  Future<void> getWallet() async{
+    prefs = await SharedPreferences.getInstance();
+    wallet = prefs.getString('wallet');
+
+    //debugPrint('movieTitle: $wallet');
+    _claimEcoPointsApi =
+    '= 3.235.209.53:3000/getrewards?wallet=$wallet&tokens=669&transId=1000';
+    //'https://eth-api-johnyuen97-gmailcom.vercel.app/getBalance?wallet=0x61824bF5Fcb2564897500A0dA0E752e3A7cAc492'; //0x61824bF5Fcb2564897500A0dA0E752e3A7cAc492
+
+    //'http://3.235.209.53:3000/getBalance?wallet=' + wallet;
+  }
+
   Future<int> _claimEcoPoints(ClaimScreenModel model) async {
+    await getWallet();
     final response = await http.post(
       Uri.parse(_claimEcoPointsApi),
       body: json.encode(<String, dynamic>{
