@@ -1,23 +1,20 @@
 class ClaimScreenModel {
   final int id;
-  final String merchantId;
-  final double purchaseTotal;
-  final int equivalentPoints;
-  final DateTime purchaseDate;
+  final int merchantId;
+  final int price;
+  final int tokens;
 
   const ClaimScreenModel(
     this.id,
     this.merchantId,
-    this.purchaseTotal,
-    this.equivalentPoints,
-    this.purchaseDate,
+    this.price,
+    this.tokens,
   );
 
   factory ClaimScreenModel.fromResponse(Map response) => ClaimScreenModel(
         response["id"],
         response["merchantId"],
-        response["purchaseTotal"],
-        response["equivalentPoints"],
-        DateTime.parse(response["purchaseDate"]),
+        response["price"],
+        response["tokens"],
       );
 }

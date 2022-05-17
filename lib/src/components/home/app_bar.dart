@@ -70,7 +70,7 @@ class HomeSliverAppBar extends StatelessWidget {
           ),
           StreamBuilder(
             stream: services.get<UserWalletModel>().balanceStream,
-            builder: (context, AsyncSnapshot<int?> snapshot) => RichText(
+            builder: (context, AsyncSnapshot<num?> snapshot) => RichText(
               text: TextSpan(children: [
                 TextSpan(
                   text: snapshot.data != null ? snapshot.data.toString() : "-",

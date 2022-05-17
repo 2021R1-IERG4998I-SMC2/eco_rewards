@@ -13,8 +13,7 @@ import 'package:eco_rewards/src/models/home/claim_screen_model.dart';
 
 class QRCodeScannerScreen extends StatefulWidget {
   // TODO: Change it to real API
-  static const _getClaimDetailsApi =
-  'http://3.235.209.53:3000/getClaimDetails?transId=1000';
+  //'http://52.206.120.192:3000/getClaimDetails?transId=1000';
   //    'https://run.mocky.io/v3/07a4c1f2-9185-4362-a676-e2d664908136';
   // 'https://example.com/transaction/$id' (QRCODE)
 
@@ -26,7 +25,7 @@ class QRCodeScannerScreen extends StatefulWidget {
 
 class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
   final qrKey = GlobalKey(debugLabel: 'QRView');
-
+  late final _getClaimDetailsApi;
   bool _isSnackBarActive = false;
 
   @override
@@ -90,7 +89,8 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         );
         return;
       }
-
+      String id = barcode.code.toString();
+      _getClaimDetailsApi = 'http://52.206.120.192:3000/getDetails?transId=$id';
       final model = _getClaimDetails(receiptId);
 
       controller.pauseCamera();
@@ -99,6 +99,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
         Ionicons.checkmark_outline,
         'Scanned successfully. Retrieving information...',
       );
+
 
       await Navigator.popAndPushNamed(
         context,
@@ -110,7 +111,7 @@ class _QRCodeScannerScreenState extends State<QRCodeScannerScreen> {
 
   Future<ClaimScreenModel?> _getClaimDetails(int transactionId) async {
     final response =
-        await http.get(Uri.parse(QRCodeScannerScreen._getClaimDetailsApi));
+        await http.get(Uri.parse(_getClaimDetailsApi));
     final data = json.decode(response.body);
 
     return ClaimScreenModel.fromResponse(data);
